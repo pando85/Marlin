@@ -1,66 +1,78 @@
 # Marlin 3D Printer Firmware
-<img align="right" src="Documentation/Logo/Marlin%20Logo%20GitHub.png" />
 
-## Marlin 1.1 Release Candidate is now available
-19 September 2015
-Please see the [RC branch](https://github.com/MarlinFirmware/Marlin/tree/RC) of this repository for access to this new pre-release version of the Marlin firmware.
+[![Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg?branch=bugfix-2.0.x)](https://travis-ci.org/MarlinFirmware/Marlin)
+![GitHub](https://img.shields.io/github/license/marlinfirmware/marlin.svg)
+![GitHub contributors](https://img.shields.io/github/contributors/marlinfirmware/marlin.svg)
+![GitHub Release Date](https://img.shields.io/github/release-date/marlinfirmware/marlin.svg)
 
-Documentation has moved to [marlinfirmware.org](http://www.marlinfirmware.org).
+<img align="top" width=175 src="buildroot/share/pixmaps/logo/marlin-250.png" />
 
-## Release Branch
+Additional documentation can be found at the [Marlin Home Page](http://marlinfw.org/).
+Please test this firmware and let us know if it misbehaves in any way. Volunteers are standing by!
 
-The Release branch contains the latest tagged version of Marlin (currently 1.0.2-1 – January 2015). It also includes a version 1.0.1 (December 2014). Any version of Marlin before 1.0.1 (when we started tagging versions) can be collectively referred to as Marlin 1.0.0.
+## Marlin 2.0 Bugfix Branch
 
-## Patches - 1.0.x Branch
+__Not for production use. Use with caution!__
 
-Any patches developed for this family of releases will be found on the [1.0.x branch](https://github.com/MarlinFirmware/Marlin/tree/1.0.x) of this repository.
+Marlin 2.0 takes this popular RepRap firmware to the next level by adding support for much faster 32-bit and ARM-based boards while improving support for 8-bit AVR boards. Read about Marlin's decision to use a "Hardware Abstraction Layer" below.
 
-## This Repository is Not For Feature Development
+This branch is for patches to the latest 2.0.x release version. Periodically this branch will form the basis for the next minor 2.0.x release.
 
-Development of future versions of Marlin is ongoing. However, to keep issues separate, that effort takes place in a companion [Development Repository](https://github.com/MarlinFirmware/MarlinDev/). Please make all suggestions for future features in that project. Issues raised here should be restricted to errors in the tagged releases.
+Download earlier versions of Marlin on the [Releases page](https://github.com/MarlinFirmware/Marlin/releases).
 
-## Current Status: In Development
+## Building Marlin 2.0
 
-Marlin development is being accelerated to catch up with a long list of issues. Check the Issues and Pull Requests links on the right to to see what we are currently working on.
+To build Marlin 2.0 you'll need [Arduino IDE 1.8.8 or newer](https://www.arduino.cc/en/main/software) or [PlatformIO](http://docs.platformio.org/en/latest/ide.html#platformio-ide). We've posted detailed instructions on [Building Marlin with Arduino](http://marlinfw.org/docs/basics/install_arduino.html) and [Building Marlin with PlatformIO for ReArm](http://marlinfw.org/docs/basics/install_rearm.html) (which applies well to other 32-bit boards).
 
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/2224/badge.svg)](https://scan.coverity.com/projects/2224)
-[![Travis Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg)](https://travis-ci.org/MarlinFirmware/Marlin)
+## Hardware Abstraction Layer (HAL)
 
-##### [RepRap.org Wiki Page](http://reprap.org/wiki/Marlin)
+Marlin 2.0 introduces a layer of abstraction so that all the existing high-level code can be built for 32-bit platforms while still retaining full 8-bit AVR compatibility. Retaining AVR compatibility and a single code-base is important to us, because we want to make sure that features and patches get as much testing and attention as possible, and that all platforms always benefit from the latest improvements.
 
-## Contact
+### Current HALs
 
-__Google Hangout:__ <a href="https://plus.google.com/hangouts/_/gxn3wrea5gdhoo223yimsiforia" target="_blank">. Hangout</a> We have a hangout every 2 weeks. Search the issue list for "Hangout" to determine the time and date of the next event.
+  name|processor|speed|flash|sram|logic|fpu
+  ----|---------|-----|-----|----|-----|---
+  [Arduino AVR](https://www.arduino.cc/)|ATmega, ATTiny, etc.|16-20MHz|64-256k|2-16k|5V|no
+  [Teensy++ 2.0](http://www.microchip.com/wwwproducts/en/AT90USB1286)|[AT90USB1286](http://www.microchip.com/wwwproducts/en/AT90USB1286)|16MHz|128k|8k|5V|no
+  [Arduino STM32](https://github.com/rogerclarkmelbourne/Arduino_STM32)|[STM32F1](https://www.st.com/en/microcontrollers-microprocessors/stm32f103.html) ARM-Cortex M3|72MHz|256-512k|48-64k|3.3V|no
+  [Due](https://www.arduino.cc/en/Guide/ArduinoDue), [RAMPS-FD](http://www.reprap.org/wiki/RAMPS-FD), etc.|[SAM3X8E ARM-Cortex M3](http://www.microchip.com/wwwproducts/en/ATsam3x8e)|84MHz|512k|64+32k|3.3V|no
+  [Re-ARM](https://www.kickstarter.com/projects/1245051645/re-arm-for-ramps-simple-32-bit-upgrade)|[LPC1768 ARM-Cortex M3](http://www.nxp.com/products/microcontrollers-and-processors/arm-based-processors-and-mcus/lpc-cortex-m-mcus/lpc1700-cortex-m3/512kb-flash-64kb-sram-ethernet-usb-lqfp100-package:LPC1768FBD100)|100MHz|512k|32+16+16k|3.3-5V|no
+  [MKS SBASE](http://forums.reprap.org/read.php?13,499322)|LPC1768 ARM-Cortex M3|100MHz|512k|32+16+16k|3.3-5V|no
+  [Azteeg X5 GT](https://www.panucatt.com/azteeg_X5_GT_reprap_3d_printer_controller_p/ax5gt.htm)|LPC1769 ARM-Cortex M3|120MHz|512k|32+16+16k|3.3-5V|no
+  [Selena Compact](https://github.com/Ales2-k/Selena)|LPC1768 ARM-Cortex M3|100MHz|512k|32+16+16k|3.3-5V|no
+  [Teensy 3.5](https://www.pjrc.com/store/teensy35.html)|ARM-Cortex M4|120MHz|512k|192k|3.3-5V|yes
+  [Teensy 3.6](https://www.pjrc.com/store/teensy36.html)|ARM-Cortex M4|180MHz|1M|256k|3.3V|yes
+
+### HALs in Development
+
+  name|processor|speed|flash|sram|logic|fpu
+  ----|---------|-----|-----|----|-----|---
+  [STEVAL-3DP001V1](http://www.st.com/en/evaluation-tools/steval-3dp001v1.html)|[STM32F401VE Arm-Cortex M4](http://www.st.com/en/microcontrollers/stm32f401ve.html)|84MHz|512k|64+32k|3.3-5V|yes
+  [Smoothieboard](http://reprap.org/wiki/Smoothieboard)|LPC1769 ARM-Cortex M3|120MHz|512k|64k|3.3-5V|no
+
+## Submitting Patches
+
+Proposed patches should be submitted as a Pull Request against the ([bugfix-2.0.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-2.0.x)) branch.
+
+- This branch is for fixing bugs and integrating any new features for the duration of the Marlin 2.0.x life-cycle.
+- Follow the [Coding Standards](http://marlinfw.org/docs/development/coding_standards.html) to gain points with the maintainers.
+- Please submit your questions and concerns to the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues).
+
+### [RepRap.org Wiki Page](http://reprap.org/wiki/Marlin)
 
 ## Credits
 
 The current Marlin dev team consists of:
 
- - Scott Lahteine [@thinkyhead] - English
- - Andreas Hardtung [@AnHardt] - Deutsch, English
- - [@Wurstnase] - Deutsch, English
- - [@fmalpartida] - English, Spanish
- - [@CONSULitAS] - Deutsch, English
- - [@maverikou]
- - Chris Palmer [@nophead]
- - [@paclema]
- - [@epatel]
- - Erik van der Zalm [@ErikZalm]
- - David Braam [@daid]
- - Bernhard Kubicek [@bkubicek]
- - Richard Wackerbarth [@Wackerbarth] - English
- - Roxanne Neufeld [@Roxy-3DPrintBoard] - English
-
-More features have been added by:
-  - Alberto Cotronei [@MagoKimbra]
-  - Lampmaker,
-  - Bradley Feldman,
-  - and others...
+ - Scott Lahteine [[@thinkyhead](https://github.com/thinkyhead)] - USA &nbsp; [![Flattr Scott](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thinkyhead&url=https://github.com/MarlinFirmware/Marlin&title=Marlin&language=&tags=github&category=software)
+ - Roxanne Neufeld [[@Roxy-3D](https://github.com/Roxy-3D)] - USA
+ - Bob Kuhn [[@Bob-the-Kuhn](https://github.com/Bob-the-Kuhn)] - USA
+ - Chris Pepper [[@p3p](https://github.com/p3p)] - UK
+ - João Brazio [[@jbrazio](https://github.com/jbrazio)] - Portugal
+ - Erik van der Zalm [[@ErikZalm](https://github.com/ErikZalm)] - Netherlands &nbsp; [![Flattr Erik](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ErikZalm&url=https://github.com/MarlinFirmware/Marlin&title=Marlin&language=&tags=github&category=software)
 
 ## License
 
-Marlin is published under the [GPL license](/COPYING.md) because we believe in open development. The GPL comes with both rights and obligations. Whether you use Marlin firmware as the driver for your open or closed-source product, you must keep Marlin open, and you must provide your compatible Marlin source code to end users upon request. The most straightforward way to comply with the Marlin license is to make a fork of Marlin on Github, perform your modifications, and direct users to your modified fork.
+Marlin is published under the [GPL license](/LICENSE) because we believe in open development. The GPL comes with both rights and obligations. Whether you use Marlin firmware as the driver for your open or closed-source product, you must keep Marlin open, and you must provide your compatible Marlin source code to end users upon request. The most straightforward way to comply with the Marlin license is to make a fork of Marlin on Github, perform your modifications, and direct users to your modified fork.
 
 While we can't prevent the use of this code in products (3D printers, CNC, etc.) that are closed source or crippled by a patent, we would prefer that you choose another firmware or, better yet, make your own.
-
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ErikZalm&url=https://github.com/MarlinFirmware/Marlin&title=Marlin&language=&tags=github&category=software)
