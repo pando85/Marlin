@@ -448,7 +448,7 @@
 #define HEATER_3_MAXTEMP 275
 #define HEATER_4_MAXTEMP 275
 #define HEATER_5_MAXTEMP 275
-#define BED_MAXTEMP      150
+#define BED_MAXTEMP      120
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -472,11 +472,9 @@
                                   // is more then PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
   #define PID_INTEGRAL_DRIVE_MAX PID_MAX  //limit for the integral term
 
-// If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
-// Ultimaker
-    #define  DEFAULT_Kp 15.71
-    #define  DEFAULT_Ki 0.69
-    #define  DEFAULT_Kd 89.77
+  #define DEFAULT_Kp 7.48
+  #define DEFAULT_Ki 0.19
+  #define DEFAULT_Kd 73.38
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
 //    #define  DEFAULT_Ki 0.1
