@@ -472,9 +472,9 @@
                                   // is more then PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
   #define PID_INTEGRAL_DRIVE_MAX PID_MAX  //limit for the integral term
 
-  #define DEFAULT_Kp 7.48
-  #define DEFAULT_Ki 0.19
-  #define DEFAULT_Kd 73.38
+  #define DEFAULT_Kp 6.80
+  #define DEFAULT_Ki 0.16
+  #define DEFAULT_Kd 71.32
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
 //    #define  DEFAULT_Ki 0.1
