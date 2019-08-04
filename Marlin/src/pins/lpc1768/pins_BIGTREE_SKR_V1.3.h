@@ -172,6 +172,8 @@
   #define HEATER_1_PIN     P2_04
 #endif
 #define FAN_PIN            P2_03
+#undef FAN_PIN
+#undef FAN1_PIN
 #define HEATER_BED_PIN     P2_05
 
 /**
