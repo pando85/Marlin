@@ -656,7 +656,7 @@
  */
 #define X_DRIVER_TYPE TMC2208_STANDALONE
 #define Y_DRIVER_TYPE TMC2208_STANDALONE
-#define Z_DRIVER_TYPE A4988
+#define Z_DRIVER_TYPE TMC2208_STANDALONE
 #define E0_DRIVER_TYPE A4988
 //#define E1_DRIVER_TYPE TMC2208
 //#define E2_DRIVER_TYPE A4988
@@ -714,7 +714,7 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4[, E5]]]]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 4, 15 }
+#define DEFAULT_MAX_FEEDRATE          { 100, 100, 3, 15 }
 
 /**
  * Default Max Acceleration (change/s) change = mm/s
@@ -1320,7 +1320,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (4*60)
+#define HOMING_FEEDRATE_Z  (3*60)
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
